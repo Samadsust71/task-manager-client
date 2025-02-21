@@ -13,7 +13,7 @@ import useAxiosPublic from "@/hooks/useAxiosPublic";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 
-const socket = io("http://localhost:3000", {
+const socket = io(`${import.meta.env.VITE_API_URL}`, {
   transports: ["websocket", "polling"],
 });
 
@@ -23,6 +23,7 @@ const TaskManager = () => {
     title: "",
     description: "",
     category: "To-Do",
+    timestamp: new Date().toISOString(),
   });
   const axiosPublic = useAxiosPublic();
   const sensors = useSensors(useSensor(PointerSensor));
@@ -100,13 +101,43 @@ const TaskManager = () => {
   };
 
   const handleAddTask = async () => {
-    if (!newTask.title || !newTask.description) return;
+    // Validate title
+    if (!newTask.title) {
+      toast.error("Title is required.");
+      return;
+    }
+    if (newTask.title.length > 50) {
+      toast.error("Title must be less than 50 characters.");
+      return;
+    }
+
+    // Validate description
+    if (newTask.description.length > 200) {
+      toast.error("Description must be less than 200 characters.");
+      return;
+    }
+
+    // Validate category
+    const validCategories = ["To-Do", "In Progress", "Done"];
+    if (!validCategories.includes(newTask.category)) {
+      toast.error("Invalid category selected.");
+      return;
+    }
+
+    // Add timestamp
+    const taskToAdd = {
+      ...newTask,
+      timestamp: new Date().toISOString(),
+    };
+
     try {
-      await axiosPublic.post("/tasks", newTask);
+      await axiosPublic.post("/tasks", taskToAdd);
       setNewTask({ title: "", description: "", category: "To-Do" });
       socket.emit("taskUpdated");
+      toast.success("Task added successfully!");
     } catch (error) {
       console.error("Error adding task:", error);
+      toast.error("Failed to add task. Please try again.");
     }
   };
 
@@ -162,7 +193,11 @@ const TaskManager = () => {
           }
           className="border p-2 rounded"
         />
-
+         <select  className="border p-2 rounded" value={newTask.category} onChange={(e) => setNewTask({ ...newTask, category: e.target.value })}>
+            <option value="To-Do">To-Do</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Done">Done</option>
+         </select>
         <button
           onClick={handleAddTask}
           className="bg-blue-500 text-white px-4 py-2 rounded"
