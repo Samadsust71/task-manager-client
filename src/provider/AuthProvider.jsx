@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import {  GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut} from "firebase/auth";
 import auth from "../firebase/firebase.config";
 import AuthContext from "../context/AuthContext";
-import axios from "axios";
 
 const googleAuthProvider = new GoogleAuthProvider()
 
@@ -22,28 +21,16 @@ const AuthProvider = ({ children }) => {
     setLoading(true)
     return signOut(auth)
   }
-  useEffect(()=>{
-    const unSubscribe = onAuthStateChanged(auth,(currentUser)=>{
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async currentUser => {
       setUser(currentUser)
-      if (currentUser?.email) {
-        const user ={email:currentUser.email}
-        axios.post("https://meal-bridge-server.vercel.app/jwt",user,{withCredentials:true})
-        .then(()=>{
-          setLoading(false)
-        })
-      }else{
-        axios.post("https://meal-bridge-server.vercel.app/logout",{},{
-          withCredentials:true
-        })
-        .then(()=>{
-          setLoading(false)
-        })
-      }
+     
+      setLoading(false)
     })
-    return ()=>{
-      unSubscribe()
+    return () => {
+      return unsubscribe()
     }
-  },[])
+  }, [])
 
   const authInfo = {
     user,

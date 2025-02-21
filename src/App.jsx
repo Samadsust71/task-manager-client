@@ -1,23 +1,28 @@
 
-import AddTask from "./components/AddTask";
+import TaskManager from "./components/tasks/TaskManager";
+import { Button } from "./components/ui/button";
+import useAuth from "./hooks/useAuth";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs";
+
 
 function App() {
+  const {user,signOutUser} = useAuth()
   return (
     <>
-      <h1>Task manager App</h1>
-      <Tabs defaultValue="account" className="w-[400px]">
-        <TabsList>
-          <TabsTrigger value="account">Tasks</TabsTrigger>
-          <TabsTrigger value="password">Add Tasks</TabsTrigger>
-        </TabsList>
-        <TabsContent value="account">
-          <AddTask/>
-        </TabsContent>
-        <TabsContent value="password">Change your password here.</TabsContent>
-      </Tabs>
-
+      <div className="w-11/12 mx-auto">
+       <nav className="flex items-center justify-between">
+        <h1 className="font-bold text-2xl">Task Manager</h1>
+        <div className="flex items-center gap-2">
+          <img src={user?.photoURL} className="w-12 h-12 rounded-full object-cover" alt={user?.displayName} />
+          <div onClick = {()=>signOutUser()}>
+          <Button>Log Out</Button>
+          </div>
+        </div>
+       </nav>
+      <TaskManager/>
+      </div>
+      
+      
     </>
   );
 }
