@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import PropTypes from "prop-types";
-import { FiEdit, FiTrash2, FiMove } from "react-icons/fi";
+import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Input } from "../ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
@@ -41,17 +41,17 @@ const TaskCard = ({ task, onEdit, onDelete }) => {
         ref={setNodeRef}
         style={style}
         {...attributes}
-        className="bg-white dark:bg-black p-3 rounded shadow mb-2 flex justify-between items-center transition-all duration-200 ease-in-out"
+        className="bg-white dark:bg-black p-3 rounded shadow mb-2 flex justify-between items-start transition-all duration-100 ease-in-out"
       >
         {/* Drag Handle */}
-        <div {...listeners} className="cursor-grab p-2">
+        {/* <div {...listeners} className="cursor-grab p-2">
           <FiMove size={18} className="text-gray-500 dark:text-gray-200" />
-        </div>
+        </div> */}
 
         {/* Task Content */}
-        <div className="flex-1">
+        <div {...listeners} className="flex-1 cursor-grab">
           <h3 className="font-semibold text-gray-800 dark:text-white">{task.title}</h3>
-          {task.description && <p className="text-sm text-gray-600 dark:text-white/80">{task.description}</p>}
+          {task.description && <p className="text-sm text-gray-600 dark:text-white/80 mt-2">{task.description}</p>}
         </div>
 
         {/* Action Buttons */}

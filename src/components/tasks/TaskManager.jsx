@@ -13,6 +13,9 @@ import useAxiosPublic from "@/hooks/useAxiosPublic";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import useAuth from "@/hooks/useAuth";
+import { Input } from "../ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { Button } from "../ui/button";
 
 const socket = io(`${import.meta.env.VITE_API_URL}`, {
   transports: ["websocket", "polling"],
@@ -179,35 +182,35 @@ const TaskManager = () => {
 
   return (
     <div className="">
-      <div className="mb-4 flex flex-col lg:flex-row gap-2 justify-center items-center">
-        <input
-          type="text"
-          placeholder="Task title"
-          value={newTask.title}
-          onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
-          className="border p-2 rounded dark:bg-black "
-        />
-        <input
-          type="text"
-          placeholder="Task description"
-          value={newTask.description}
-          onChange={(e) =>
-            setNewTask({ ...newTask, description: e.target.value })
-          }
-          className="border p-2 rounded dark:bg-black"
-        />
-         <select  className="border p-2 rounded dark:bg-black" value={newTask.category} onChange={(e) => setNewTask({ ...newTask, category: e.target.value })}>
-            <option value="To-Do">To-Do</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Done">Done</option>
-         </select>
-        <button
-          onClick={handleAddTask}
-          className="bg-blue-500 text-white px-4 py-2 rounded"
-        >
-          Add Task
-        </button>
-      </div>
+      <div className="mb-10 flex flex-col lg:flex-row gap-2 justify-center items-center max-w-2xl mx-auto">
+      <Input
+        type="text"
+        placeholder="Task title"
+        value={newTask.title}
+        onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
+        
+      />
+      <Input
+        type="text"
+        placeholder="Task description"
+        value={newTask.description}
+        onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
+      />
+      <Select
+        onValueChange={(value) => setNewTask({ ...newTask, category: value })}
+        value={newTask.category}
+      >
+        <SelectTrigger>
+          <SelectValue placeholder="Select Category" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="To-Do">To-Do</SelectItem>
+          <SelectItem value="In Progress">In Progress</SelectItem>
+          <SelectItem value="Done">Done</SelectItem>
+        </SelectContent>
+      </Select>
+      <Button onClick={handleAddTask}>Add Task</Button>
+    </div>
       <DndContext
         sensors={sensors}
         collisionDetection={closestCorners}

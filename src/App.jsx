@@ -24,7 +24,7 @@ function App() {
             </div>
           </div>
         </nav>
-        <div className="my-10 overflow-hidden">
+        <div className="my-10">
         <TaskManager />
         </div>
       </div>
