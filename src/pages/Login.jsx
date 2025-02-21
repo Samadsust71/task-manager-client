@@ -20,7 +20,7 @@ const Login = () => {
           name: result.user.displayName,
         };
   
-        console.log("User Info:", userInfo);
+    
   
         // Wait for response from backend
         const res = await axiosPublic.post("/add-user", userInfo);

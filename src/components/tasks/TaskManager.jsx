@@ -148,7 +148,7 @@ const TaskManager = () => {
   };
 
   const handleEditTask = async (updatedTask) => {
-    console.log(updatedTask);
+    
     try {
       await axiosPublic.patch(`/task/${updatedTask._id}`, updatedTask);
       socket.emit("taskUpdated");
