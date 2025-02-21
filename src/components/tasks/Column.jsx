@@ -10,7 +10,7 @@ const Column = ({ id, title, tasks, onEdit, onDelete }) => {
   return (
     <div
       ref={setNodeRef} // Attach the droppable ref to the column
-      className="bg-gray-100 p-4 rounded-lg shadow-md min-h-[400px]"
+      className="bg-gray-100 dark:bg-black/10 p-4 rounded-lg shadow-md min-h-[400px]"
     >
       <h2 className="text-lg font-semibold mb-4">{title}</h2>
       <SortableContext items={tasks.map((task) => task._id)}>

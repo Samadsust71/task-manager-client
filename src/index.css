@@ -1,8 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @layer base {
   :root {
-    --radius: 0.5rem
+    --radius: 0.5rem;
+
+    /* Light Mode (Default) */
+    --color-background: rgb(245, 246, 250);
+    --color-text: #1f2937;
+    --color-primary: #14B8A6;
+    --color-secondary: #14B8A6;
+  }
+
+  /* Dark Mode */
+  .dark {
+    --color-background: #1e293b;
+    --color-text: #e5e7eb;
+    --color-primary: #14B8A6;
+    --color-secondary: #14B8A6;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    transition: background-color 0.3s, color 0.3s;
   }
 }

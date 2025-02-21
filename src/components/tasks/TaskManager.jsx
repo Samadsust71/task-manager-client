@@ -12,6 +12,7 @@ import Column from "./Column";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import useAuth from "@/hooks/useAuth";
 
 const socket = io(`${import.meta.env.VITE_API_URL}`, {
   transports: ["websocket", "polling"],
@@ -26,12 +27,13 @@ const TaskManager = () => {
     timestamp: new Date().toISOString(),
   });
   const axiosPublic = useAxiosPublic();
+  const {user} = useAuth()
   const sensors = useSensors(useSensor(PointerSensor));
 
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const response = await axiosPublic.get("/tasks");
+        const response = await axiosPublic.get(`/tasks/${user?.email}`);
         setTasks(response.data);
       } catch (error) {
         console.error("Error fetching tasks:", error);
@@ -44,7 +46,7 @@ const TaskManager = () => {
     return () => {
       socket.off("taskUpdated", fetchTasks);
     };
-  }, [axiosPublic]);
+  }, [axiosPublic,user?.email]);
 
   const handleDragEnd = async (event) => {
     const { active, over } = event;
@@ -128,6 +130,7 @@ const TaskManager = () => {
     const taskToAdd = {
       ...newTask,
       timestamp: new Date().toISOString(),
+      email: user?.email
     };
 
     try {
@@ -176,13 +179,13 @@ const TaskManager = () => {
 
   return (
     <div className="">
-      <div className="mb-4 flex gap-2 justify-center items-center">
+      <div className="mb-4 flex flex-col lg:flex-row gap-2 justify-center items-center">
         <input
           type="text"
           placeholder="Task title"
           value={newTask.title}
           onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
-          className="border p-2 rounded"
+          className="border p-2 rounded dark:bg-black "
         />
         <input
           type="text"
@@ -191,9 +194,9 @@ const TaskManager = () => {
           onChange={(e) =>
             setNewTask({ ...newTask, description: e.target.value })
           }
-          className="border p-2 rounded"
+          className="border p-2 rounded dark:bg-black"
         />
-         <select  className="border p-2 rounded" value={newTask.category} onChange={(e) => setNewTask({ ...newTask, category: e.target.value })}>
+         <select  className="border p-2 rounded dark:bg-black" value={newTask.category} onChange={(e) => setNewTask({ ...newTask, category: e.target.value })}>
             <option value="To-Do">To-Do</option>
             <option value="In Progress">In Progress</option>
             <option value="Done">Done</option>
@@ -210,7 +213,7 @@ const TaskManager = () => {
         collisionDetection={closestCorners}
         onDragEnd={handleDragEnd}
       >
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {["To-Do", "In Progress", "Done"].map((category) => (
             <Column
               key={category}

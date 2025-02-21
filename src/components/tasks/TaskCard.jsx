@@ -41,17 +41,17 @@ const TaskCard = ({ task, onEdit, onDelete }) => {
         ref={setNodeRef}
         style={style}
         {...attributes}
-        className="bg-white p-3 rounded shadow mb-2 flex justify-between items-center transition-all duration-200 ease-in-out"
+        className="bg-white dark:bg-black p-3 rounded shadow mb-2 flex justify-between items-center transition-all duration-200 ease-in-out"
       >
         {/* Drag Handle */}
         <div {...listeners} className="cursor-grab p-2">
-          <FiMove size={18} className="text-gray-500" />
+          <FiMove size={18} className="text-gray-500 dark:text-gray-200" />
         </div>
 
         {/* Task Content */}
         <div className="flex-1">
-          <h3 className="font-semibold text-gray-800">{task.title}</h3>
-          {task.description && <p className="text-sm text-gray-600">{task.description}</p>}
+          <h3 className="font-semibold text-gray-800 dark:text-white">{task.title}</h3>
+          {task.description && <p className="text-sm text-gray-600 dark:text-white/80">{task.description}</p>}
         </div>
 
         {/* Action Buttons */}
