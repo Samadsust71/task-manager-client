@@ -152,6 +152,7 @@ const TaskManager = () => {
     try {
       await axiosPublic.patch(`/task/${updatedTask._id}`, updatedTask);
       socket.emit("taskUpdated");
+      toast.success("Task updated successfully!");
     } catch (error) {
       console.error("Error editing task:", error);
     }
@@ -182,7 +183,7 @@ const TaskManager = () => {
 
   return (
     <div className="">
-      <div className="mb-10 flex flex-col lg:flex-row gap-2 justify-center items-center max-w-2xl mx-auto">
+      <div className="mb-10 flex flex-col lg:flex-row gap-2 justify-center items-center w-10/12  mx-auto">
       <Input
         type="text"
         placeholder="Task title"

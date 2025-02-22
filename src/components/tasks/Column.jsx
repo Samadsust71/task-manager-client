@@ -19,7 +19,7 @@ const Column = ({ id, title, tasks, onEdit, onDelete }) => {
             <TaskCard key={task._id} task={task} onEdit={onEdit} onDelete={onDelete} />
           ))
         ) : (
-          <p className="text-gray-500 text-sm">No tasks available</p>
+          <p className="text-gray-800 dark:text-white/80">No task is in {title}</p>
         )}
       </SortableContext>
     </div>
