@@ -1,5 +1,6 @@
 import { Navigate, useLocation } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
+import Loading from '@/components/Loading'
 
 
 
@@ -10,7 +11,7 @@ const PrivateRoute = ({children}) => {
     const location = useLocation()
     
     if (loading) {
-        return <h1 className='flex justify-center items-center'>...loading</h1>
+        return <Loading/>
     }
 
     if (user) {
