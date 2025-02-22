@@ -7,9 +7,10 @@ function App() {
   const { user, signOutUser } = useAuth();
   return (
     <>
-      <div className="w-11/12 mx-auto">
-        <nav className="flex items-center justify-between py-6">
-          <h1 className="font-bold text-2xl">Task Manager</h1>
+      <div className="">
+       <div className="bg-accent">
+       <nav className="flex items-center justify-between py-6 w-11/12 mx-auto ">
+          <h1 className="font-bold text-3xl text-gray-800">Task <span>Manager</span></h1>
           <div className="flex items-center gap-2">
             <img
               src={user?.photoURL}
@@ -20,11 +21,12 @@ function App() {
               <ThemeToggle />
             </div>
             <div onClick={() => signOutUser()}>
-              <Button>Log Out</Button>
+              <Button variant={"secondary"} >Log Out</Button>
             </div>
           </div>
         </nav>
-        <div className="my-10">
+       </div>
+        <div className="my-10 w-11/12 mx-auto">
         <TaskManager />
         </div>
       </div>

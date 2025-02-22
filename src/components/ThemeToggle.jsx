@@ -18,7 +18,7 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-      className="p-2 rounded-full"
+      className="p-2 rounded-full text-gray-800"
     >
       {theme === "light" ? <IoMoonOutline className="text-xl" /> : <MdOutlineWbSunny className="text-xl" />}
     </button>

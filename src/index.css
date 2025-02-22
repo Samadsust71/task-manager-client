@@ -11,6 +11,8 @@
     --color-text: #1f2937;
     --color-primary: #14B8A6;
     --color-secondary: #14B8A6;
+    --color-accent: #69BBFF;
+    --color-accent-hover: #69BBFF;
   }
 
   /* Dark Mode */
@@ -19,6 +21,8 @@
     --color-text: #e5e7eb;
     --color-primary: #14B8A6;
     --color-secondary: #14B8A6;
+    --color-accent: #69BBFF; /* Lighter shade in dark mode */
+    --color-accent-hover: #69BBFF; /* Swap hover and default */
   }
 
   body {
